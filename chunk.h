@@ -9,4 +9,8 @@
 
 #include "common.h"
 
+typedef enum {
+    OP_RETURN,
+} OpCode;
+
 #endif //BYTECODE_VM_CHUNK_H
