@@ -13,4 +13,10 @@ typedef enum {
     OP_RETURN,
 } OpCode;
 
+typedef struct {
+    int count;
+    int capacity;
+    uint8_t* code;
+} chunk;
+
 #endif //BYTECODE_VM_CHUNK_H
