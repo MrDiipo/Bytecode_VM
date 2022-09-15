@@ -2,6 +2,7 @@
 // Created by Neptune on 9/15/2022.
 //
 #include "chunk.h"
+#include "memory.h"
 
 void initChunk(Chunk* chunk) {
     chunk ->count = 0;
