@@ -17,6 +17,9 @@ typedef struct {
     int count;
     int capacity;
     uint8_t* code;
-} chunk;
+} Chunk;
+
+void initChunk(Chunk* chunk);
+void writeChunk(Chunk* chunk, uint8_t byte);
 
 #endif //BYTECODE_VM_CHUNK_H

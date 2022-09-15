@@ -3,4 +3,4 @@ project(Bytecode_VM C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(Bytecode_VM main.c common.h chunk.h)
+add_executable(Bytecode_VM main.c common.h chunk.h chunk.c)
