@@ -19,4 +19,3 @@ void writeChunk(Chunk* chunk, uint8_t byte) {
     chunk->code[chunk->count] = byte;
     chunk->count++;
 }
-
