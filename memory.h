@@ -1,6 +1,3 @@
-//
-// Created by Neptune on 9/15/2022.
-//
 
 #ifndef BYTECODE_VM_MEMORY_H
 #define BYTECODE_VM_MEMORY_H

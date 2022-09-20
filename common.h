@@ -1,6 +1,4 @@
-//
-// Created by oladipupo on 9/10/22.
-//
+
 
 #ifndef BYTECODE_VM_COMMON_H
 #define BYTECODE_VM_COMMON_H

@@ -1,6 +1,4 @@
-//
-// Created by Neptune on 9/20/2022.
-//
+
 
 #ifndef BYTECODE_VM_DEBUG_H
 #define BYTECODE_VM_DEBUG_H
