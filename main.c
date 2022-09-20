@@ -1,15 +1,18 @@
 #include <stdlib.h>
 #include "common.h"
-#define SIZE 5
+#include "chunk.h"
+#include "debug.h"
+#define SIZE 6
 
 int sum(const int*, int);
 
 
-int main() {
-    int array[] = {2, 7, 8,'k',9};
-    printf("The sum of the the total of the element in the array is %d\n", sum(array, SIZE));
-    printf("The size of the array is %zd\n", sizeof array);
-
+int main(int argc, const char* argv[]) {
+    Chunk chunk;
+    initChunk(&chunk);
+    writeChunk(&chunk, OP_RETURN);
+    disassembleChunk(&chunk, "test chunk");
+    freeChunk(&chunk);
     return 0;
 }
 
