@@ -1,6 +1,4 @@
-//
-// Created by Neptune on 9/15/2022.
-//
+
 #include <stdlib.h>
 #include "memory.h"
 
