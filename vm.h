@@ -20,6 +20,7 @@ typedef enum {
 void initVM();
 InterpretResult interpret(Chunk*  chunk);
 void freeVM();
-void pus
+void push(Value value);
+Value pop();
 
 #endif //BYTECODE_VM_VM_H
