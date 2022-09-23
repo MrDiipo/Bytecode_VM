@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "vm.h"
 #include "debug.h"
+#include "compiler.h"
 
 static InterpretResult run();
 
