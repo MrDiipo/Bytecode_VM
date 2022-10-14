@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <wsman.h>
 #include "compiler.h"
 #include "common.h"
 #include "scanner.h"
@@ -98,6 +97,8 @@ static void emitReturn() {
     emitByte(OP_RETURN);
 }
 
+static void error(const char *string);
+
 static uint8_t makeConstant(Value value) {
     int constant = addConstant(currentChunk(), value);
     if (constant > UINT8_MAX) {
@@ -105,6 +106,10 @@ static uint8_t makeConstant(Value value) {
         return 0;
     }
     return (uint8_t) constant;
+}
+
+static void error(const char *string) {
+    printf(string);
 }
 
 static void emitConstant(Value value) {
@@ -125,6 +130,8 @@ static void expression();
 static ParseRule* getRule(TokenType type);
 static void parsePrecedence(Precedence precedence);
 
+static void copyString(const char *string, int i);
+
 static void binary() {
     // Remember the operator
     TokenType operatorType = parser.previous.type;
@@ -135,6 +142,24 @@ static void binary() {
 
     // Emit the operator instruction
     switch (operatorType) {
+        case TOKEN_BANG_EQUAL:
+            emitBytes(OP_EQUAL, OP_NOT);
+            break;
+        case TOKEN_EQUAL_EQUAL:
+            emitByte(OP_EQUAL);
+            break;
+        case TOKEN_GREATER:
+            emitByte(OP_GREATER); emitByte(OP_GREATER);
+            break;
+        case TOKEN_GREATER_EQUAL:
+            emitBytes(OP_LESS, OP_NOT);
+            break;
+        case TOKEN_LESS:
+            emitByte(OP_LESS);
+            break;
+        case TOKEN_LESS_EQUAL:
+            emitBytes(OP_GREATER, OP_NOT);
+            break;
         case TOKEN_PLUS:
             emitByte(OP_ADD);
             break;
@@ -183,6 +208,15 @@ static void number() {
     emitConstant(NUMBER_VAL(value));
 }
 
+static void string() {
+    emitConstant(OBJ_VAL(copyString(parser.previous.start + 1,
+                                    parser.previous.length - 2)));
+}
+
+static void copyString(const char *string, int i) {
+
+}
+
 static void unary() {
     TokenType operatorType = parser.previous.type;
 
@@ -222,7 +256,7 @@ ParseRule rules[] = {
         [TOKEN_LESS] = {NULL, binary, PREC_COMPARISON},
         [TOKEN_LESS_EQUAL]  = {NULL, binary, PREC_COMPARISON},
         [TOKEN_IDENTIFIER]  = {NULL, NULL, PREC_NONE},
-        [TOKEN_STRING]  = {NULL, NULL, PREC_NONE},
+        [TOKEN_STRING]  = {string, NULL, PREC_NONE},
         [TOKEN_NUMBER] = {number, NULL, PREC_NONE},
         [TOKEN_AND]  = {NULL, NULL, PREC_NONE},
         [TOKEN_CLASS] = {NULL, NULL, PREC_NONE},
@@ -265,7 +299,7 @@ static ParseRule* getRule(TokenType type) {
     return &rules[type];
 }
 
-void compile(const char *source, Chunk *chunk) {
+bool compile(const char *source, Chunk *chunk) {
     initScanner(source);
     compilingChunk = chunk;
 
@@ -275,5 +309,5 @@ void compile(const char *source, Chunk *chunk) {
     expression();
     consume(TOKEN_EOF, "Expect end of expression");
     endCompiler();
-//    return !parser.hadError;
+    return !parser.hadError;
 }
