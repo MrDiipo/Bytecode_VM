@@ -130,7 +130,6 @@ static void expression();
 static ParseRule* getRule(TokenType type);
 static void parsePrecedence(Precedence precedence);
 
-static void copyString(const char *string, int i);
 
 static void binary() {
     // Remember the operator
@@ -210,12 +209,9 @@ static void number() {
 
 static void string() {
     emitConstant(OBJ_VAL(copyString(parser.previous.start + 1,
-                                    parser.previous.length - 2)));
+                                    parser.previous.length - 2))); // trims the leading and trailing quotation marks
 }
 
-static void copyString(const char *string, int i) {
-
-}
 
 static void unary() {
     TokenType operatorType = parser.previous.type;
