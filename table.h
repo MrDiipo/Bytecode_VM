@@ -19,4 +19,10 @@ typedef struct {
 void initTable(Table* table);
 void freeTable(Table* table);
 
+bool tableGet(Table* table, ObjString* key, Value* value);
+bool tableSet(Table* table, ObjString* key, Value value);
+
+bool tableDelete(Table* table, ObjString* key);
+void tableAddAll(Table* from, Table* to);
+
 #endif //BYTECODE_VM_TABLE_H
